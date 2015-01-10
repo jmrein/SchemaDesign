@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="schema">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="table" type="table" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:complexType name="table">
+	<xs:sequence>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="column" type="column" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="fk" type="fk" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:sequence>
+	<xs:attribute name="name" type="xs:string"/>
+	<xs:attribute name="x" type="xs:integer"/>
+	<xs:attribute name="y" type="xs:integer"/>
+</xs:complexType>
+
+<xs:complexType name="column">
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="type" type="dataType"/>
+			<xs:attribute name="pk" type="xs:boolean"/>
+			<xs:attribute name="null" type="xs:boolean"/>
+			<xs:attribute name="unique" type="xs:boolean"/>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name="fk">
+	<xs:simpleContent>
+		<xs:extension base="column">
+			<xs:attribute name="table" type="xs:string"/>
+			<xs:attribute name="column" type="xs:string"/>
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
+<xs:simpleType name="dataType" final="restriction">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="autoint"/>
+		<xs:enumeration value="int"/>
+		<xs:enumeration value="blob"/>
+		<xs:enumeration value="numeric"/>
+		<xs:enumeration value="text"/>
+		<xs:enumeration value="autoint"/>
+	</xs:restriction>
+</xs:simpleType>
+</xs:schema>
